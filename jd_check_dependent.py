@@ -7,9 +7,9 @@ Author: HarbourJ
 Date: 2022/8/12 20:37
 TG: https://t.me/HarbourToulu
 TgChat: https://t.me/HarbourSailing
-cron: 7 7 7 7 7
-new Env('Faker库依赖一键安装');
-Description:1.Faker库jd_sign本地算法依赖一键检测安装脚本;
+cron: 0 0 */2 * * *
+new Env('HarbourJ库依赖一键安装');
+Description:1.HarbourToulu库jd_sign本地算法依赖一键检测安装脚本;
             2.自动识别机器系统/架构,拉取最新依赖文件;
             3.本地sign算法已编译支持Windows(amd64)、Linux(amd64/arm64/arm)、Macos(x86_64)系统/架构;
             4.默认支持python3版本为3.8-3.10,过低可能会报错;
@@ -113,7 +113,7 @@ def check_ld_libc(version):
                 os.system('rm -rf ld-linux-aarch64.tar.gz')
                 os.system('rm -rf ld-linux-aarch64.so.1')
             else:
-                print("❌arm64-ld依赖安装失败,请前往Faker TG群查看安装教程\n")
+                print("❌arm64-ld依赖安装失败,请前往https://github.com/HarbourJ/HarbourToulu/blob/main/README.md,查看依赖安装教程\n")
     if "libc.musl-aarch64.so.1" in (os.listdir('/lib')):
         print("🗣已存在arm64-libc依赖\n")
         pass
@@ -126,7 +126,7 @@ def check_ld_libc(version):
                 os.system('rm -rf libc.musl-aarch64.tar.gz')
                 os.system('rm -rf libc.musl-aarch64.so.1')
             else:
-                print("❌arm64-libc依赖安装失败,请前往Faker TG群查看安装教程\n")
+                print("❌arm64-libc依赖安装失败,请前往https://github.com/HarbourJ/HarbourToulu/blob/main/README.md,查看依赖安装教程\n")
 
 def download(version, systemFile):
     raw_url = f"https://ghproxy.com/https://github.com/HarbourJ/HarbourToulu/releases/download/{version}/{systemFile}"
@@ -234,7 +234,7 @@ def main():
         if result:
             print("✅依赖安装/更新完成")
     except:
-        print("‼️依赖安装/更新失败,请前往Faker TG群查看安装教程")
+        print("‼️依赖安装/更新失败,请前往https://github.com/HarbourJ/HarbourToulu/blob/main/README.md,查看依赖安装教程")
 
 if __name__ == '__main__':
     main()
