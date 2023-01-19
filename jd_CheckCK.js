@@ -1,7 +1,8 @@
 /*
-京东CK检测
-cron:30 * * * *
+cron "30 * * * *" jd_CheckCK.js, tag:京东CK检测by-ccwav
+fix by faker
  */
+//详细说明参考 https://github.com/ccwav/QLScript2.
 const $ = new Env('京东CK检测');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -138,7 +139,7 @@ if ($.isNode() && process.env.CHECKCK_ALLNOTIFY) {
     }
 
     for (let i = 0; i < envs.length; i++) {
-        if (envs[i].value) {
+        if (envs[i].value) {			
 			var tempid=0;
 			if(envs[i]._id){
 				tempid=envs[i]._id;
@@ -146,7 +147,7 @@ if ($.isNode() && process.env.CHECKCK_ALLNOTIFY) {
 			if(envs[i].id){
 				tempid=envs[i].id;
 			}
-            cookie = await getEnvById(tempid);
+            cookie = await getEnvById(tempid);				
             $.UserName = (cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
             $.UserName2 = decodeURIComponent($.UserName);
             $.index = i + 1;
@@ -472,7 +473,7 @@ if ($.isNode() && process.env.CHECKCK_ALLNOTIFY) {
             console.log(allMessage);
 			if (strAllNotify)
                     allMessage += `\n` + strAllNotify;
-
+				
             await notify.sendNotify(`${$.name}`, `${allMessage}`, {
                 url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean`
             })
@@ -483,7 +484,7 @@ if ($.isNode() && process.env.CHECKCK_ALLNOTIFY) {
 })()
 .catch((e) => $.logErr(e))
 .finally(() => $.done())
-
+$.UA = require('./USER_AGENTS').UARAM();
 function TotalBean() {
     return new Promise(async resolve => {
         const options = {
@@ -493,7 +494,7 @@ function TotalBean() {
                 Accept: "*/*",
                 Connection: "keep-alive",
                 Cookie: cookie,
-                "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                "User-Agent": $.UA,
                 "Accept-Language": "zh-cn",
                 "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
                 "Accept-Encoding": "gzip, deflate, br"
@@ -544,7 +545,7 @@ function isLoginByX1a0He() {
             headers: {
                 "Cookie": cookie,
                 "referer": "https://h5.m.jd.com/",
-                "User-Agent": "jdapp;iPhone;10.1.2;15.0;network/wifi;Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+                "User-Agent": $.UA,
             },
         }
         $.get(options, (err, resp, data) => {
