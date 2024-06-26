@@ -4,7 +4,7 @@
 环境变量：jd_wxShareActivity_activityId // 活动id
         jd_wxShareActivity_helpnum // 需要助力的账号数量
 
-7 7 7 7 *  jd_wxShareActivity.js
+7 7 7 7 * 
 
 */
 

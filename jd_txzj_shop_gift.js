@@ -3,7 +3,7 @@
 活动链接：https://txzj-isv.isvjcloud.com/shop_gift?code=<活动id>
 环境变量：jd_shop_gift_activityUrl // 活动链接
 
-7 7 7 7 *  jd_txzj_shop_gift.js
+7 7 7 7 * 
 
 */
 

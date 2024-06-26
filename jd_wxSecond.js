@@ -4,7 +4,7 @@
 环境变量：jd_wxSecond_activityId // 活动id
          jd_wxSecond_addCart // 是否做加购任务，默认不做
 
-7 7 7 7 *  jd_wxSecond.js
+7 7 7 7 * 
 
 */
 

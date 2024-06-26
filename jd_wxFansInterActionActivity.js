@@ -6,7 +6,7 @@
 
 脚本自动入会，不想入会勿跑！
 
-7 7 7 7 *  jd_wxFansInterActionActivity.js
+7 7 7 7 * 
 
 */
 

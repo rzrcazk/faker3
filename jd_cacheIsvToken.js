@@ -4,7 +4,50 @@
 如果你的网络环境不佳，你可以使用此脚本提前缓存，默认缓存到本地，缓存方式基于调用 getToken 模块脚本，更多功能详见如下Readme，支持配置代理和自定义缓存等
 每次运行都会覆盖本地缓存请勿频繁运行，若非必要则不建议定时运行此脚本，否则请保持运行间隔在25分钟以上
 
-0/25 * * * * jd_cacheIsvToken.js
+7 7 7 7 * jd_cacheIsvToken.js
+
+- ### 配置代理
+  - #### 全局代理
+    ```bash
+    ## 启用代理
+    export JD_ISV_GLOBAL_PROXY="true"
+    ## 代理组件库相关控制变量
+    # 定义 HTTP 代理地址（必填）
+    export GLOBAL_AGENT_HTTP_PROXY="" # 例：http://127.0.0.1:8080
+    # 过滤不需要代理的地址（必填）
+    export GLOBAL_AGENT_NO_PROXY='127.0.0.1,172.17.0.1,*.telegram.org,oapi.dingtalk.com' # 用英文逗号分割多个地址，这里特别注意要把用到的内网ip过滤掉
+    ```
+    全局代理适用于本仓库绝大多数脚本，更多配置方法详见 [gajus/global-agent](https://github.com/gajus/global-agent)
+    需要额外安装代理依赖库才能使用 `npm install -g global-agent`
+    > 如果你正在使用 Arcadia 面板则无需重复安装此代理依赖库，并且可以通过命令选项 `--agent` 在任意脚本上便捷的实现全局代理功能，具体详见配置文件和文档
+  - #### 获取 `Token` 局部代理
+    ```bash
+    export JD_ISV_TOKEN_PROXY="" # 代理接口地址
+    ```
+    目前受限于官方接口策略，同一IP段请求多个账号后会频繁响应 `403`，因此可能需要配合代理使用，使用代理时会自动重试请求至多3次  
+    需要额外安装代理依赖库才能使用 `npm install -g hpagent`
+    - ##### 通过 API 提取的动态代理
+      如果你需要使用的是代理商接口所动态提供的代理地址，那么请定义下方的变量
+      ```bash
+      export JD_ISV_TOKEN_PROXY_API="" # 代理接口地址，例：http://example.com/api/getProxy?sevret=xxx
+      export JD_ISV_TOKEN_PROXY_API_MAX="" # 每个代理地址的使用次数，默认为1次
+      ```
+      为了避免不必要的浪费建议将接口每次响应的代理地址数量设置为1个，另外建议将接口响应格式设置为单行文本的 `ip:port` 格式，同时也支持 `json` 格式不过仅适配了部分代理商  
+      启用此模式后由环境变量 `JD_ISV_TOKEN_PROXY_API` 指定的固定代理地址将会自动被忽略，届时会使用接口响应数据所动态提供的代理地址
+- ### 自定义 `Token` 缓存
+  - #### 自定义缓存文件路径
+    ```bash
+    export JD_ISV_TOKEN_CUSTOM_CACHE="" # 绝对路径，建议以 token.json 命名
+    ```
+    > 此文件默认存储在仓库 `function/cache` 目录下
+  - #### 使用 `Redis` 数据库
+    ```bash
+    export JD_ISV_TOKEN_REDIS_CACHE_URL="" # 数据库地址，例：redis://password@127.0.0.1:6379/0
+    export JD_ISV_TOKEN_REDIS_CACHE_KEY="" # 自定义提取或提交的键名规则，详见下方说明
+    export JD_ISV_TOKEN_REDIS_CACHE_SUBMIT="" # 是否向数据库提交新的缓存token（true/false），默认是
+    ```
+    > 需要额外安装依赖库才能使用 `npm install -g redis`，默认从键名为用户名的字符串对象中提取键值，用户名是解码后的  
+    > 如果你想自定义键名格式则需要将用户名位置设为 `<pt_pin>` 例如：`isv_token:<pt_pin>`，否则将自动在末尾追加
 
 */
 

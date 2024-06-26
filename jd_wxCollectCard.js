@@ -5,7 +5,7 @@
 
 默认助力第一个CK，第一个CK失效会退出脚本
 
-7 7 7 7 * jd_wxCollectCard.js
+7 7 7 7 * 
 
 */
 
